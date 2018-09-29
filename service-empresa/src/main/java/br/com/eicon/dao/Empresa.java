@@ -1,8 +1,6 @@
 package br.com.eicon.dao;
 
 import java.sql.Date;
-import java.util.Calendar;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
