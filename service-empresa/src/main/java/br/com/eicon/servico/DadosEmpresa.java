@@ -27,17 +27,17 @@ public class DadosEmpresa {
     }
 	
 	@POST
-	@Path("set")
+	@Path("addempresa")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response setNewEmpresa(@FormParam("cnpj") String cnpj
-    						 ,@FormParam("im") String im
-    						 ,@FormParam("razao") String razao
-    						 ,@FormParam("dtAbertura") Date dtAbertura
-    						 ,@FormParam("dtEncerramento") Date dtEncerramento
-    						 ,@FormParam("endereco") String endereco 
-    						 ,@FormParam("situacao") int situacao
-    						 ,@FormParam("ativo") int ativo) {
+	    						 ,@FormParam("im") String im
+	    						 ,@FormParam("razao") String razao
+	    						 ,@FormParam("dtAbertura") Date dtAbertura
+	    						 ,@FormParam("dtEncerramento") Date dtEncerramento
+	    						 ,@FormParam("endereco") String endereco 
+	    						 ,@FormParam("situacao") int situacao
+	    						 ,@FormParam("ativo") int ativo) {
 		
 		try{
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("serviceEmpresa");
