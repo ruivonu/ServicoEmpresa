@@ -1,5 +1,6 @@
 package br.com.eicon.dao;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -24,10 +25,10 @@ public class Empresa {
 	@Column
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Calendar dtabertura;
+	private Date dtabertura;
 	@Column
 	@Temporal(TemporalType.DATE)
-	private Calendar dtencerramento;
+	private Date dtencerramento;
 	@Column
 	@NotNull
 	private String endereco;
@@ -38,6 +39,9 @@ public class Empresa {
 	@NotNull
 	private int ativo;
 
+	public Empresa(String cnpj2, String im2, String razao, Date dtAbertura2, Date dtEncerramento2, String endereco2,
+			int situacao2, int ativo2) {
+	}
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -56,16 +60,16 @@ public class Empresa {
 	public void setRazaosocial(String razaosocial) {
 		this.razaosocial = razaosocial;
 	}
-	public Calendar getDtabertura() {
+	public Date getDtabertura() {
 		return dtabertura;
 	}
-	public void setDtabertura(Calendar dtabertura) {
+	public void setDtabertura(Date dtabertura) {
 		this.dtabertura = dtabertura;
 	}
-	public Calendar getDtencerramento() {
+	public Date getDtencerramento() {
 		return dtencerramento;
 	}
-	public void setDtencerramento(Calendar dtencerramento) {
+	public void setDtencerramento(Date dtencerramento) {
 		this.dtencerramento = dtencerramento;
 	}
 	public String getEndereco() {

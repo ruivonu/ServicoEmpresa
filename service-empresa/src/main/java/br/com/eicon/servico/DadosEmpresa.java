@@ -1,13 +1,18 @@
 package br.com.eicon.servico;
 
+import java.sql.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import br.com.eicon.dao.Empresa;
@@ -22,34 +27,40 @@ public class DadosEmpresa {
         return "Teste....";
     }
 	
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces("application/json")
-	//@Consumes("application/json")
 	@POST
 	@Path("set")
-    public void setNewEmpresa(Empresa[] array) {
-		//String cnpj, String im, String razaosocial, Calendar dtabertura, Calendar dtencerramento, String endereco, int situacao, int ativo
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("serviceEmpresa");
-		for(Empresa emprJson : array ){
-			try{
-				Empresa empr = new Empresa();
-				empr.setCnpj(emprJson.getCnpj());
-				empr.setIm(emprJson.getIm());
-				empr.setRazaosocial(emprJson.getRazaosocial());
-				empr.setDtabertura(emprJson.getDtabertura());
-				empr.setDtencerramento(emprJson.getDtencerramento());
-				empr.setEndereco(emprJson.getEndereco());
-				empr.setSituacao(emprJson.getSituacao());
-				empr.setAtivo(emprJson.getAtivo());
-				
-				EntityManager em  = emf.createEntityManager();
-				em.getTransaction().begin();
-				em.persist(empr);
-				em.getTransaction().commit();
-				em.close();
-			}catch(Exception e){
-				throw e;
-			}
+	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public void setNewEmpresa(@FormParam("cnpj") String cnpj
+    						 ,@FormParam("im") String im
+    						 ,@FormParam("razao") String razao
+    						 ,@FormParam("dtAbertura") Date dtAbertura
+    						 ,@FormParam("dtEncerramento") Date dtEncerramento
+    						 ,@FormParam("endereco") String endereco 
+    						 ,@FormParam("situacao") int situacao
+    						 ,@FormParam("ativo") int ativo) {
+		
+		try{
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("serviceEmpresa");
+			EntityManager em  = emf.createEntityManager();
+			
+			Empresa empr = new Empresa(cnpj,im,razao,dtAbertura,dtEncerramento,endereco,situacao,ativo);
+			
+			empr.setCnpj(cnpj);
+			empr.setIm(im);
+			empr.setRazaosocial(razao);
+			empr.setDtabertura(dtAbertura);
+			empr.setDtencerramento(dtEncerramento);
+			empr.setEndereco(endereco);
+			empr.setSituacao(situacao);
+			empr.setAtivo(ativo);
+			
+			em.getTransaction().begin();
+			em.persist(empr);
+			em.getTransaction().commit();
+			em.close();
+		}catch(Exception e){			
+			throw e;
 		}
     }
 }
