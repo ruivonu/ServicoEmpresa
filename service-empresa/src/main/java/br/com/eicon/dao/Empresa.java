@@ -4,8 +4,6 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,10 +20,10 @@ public class Empresa {
 	private String razaosocial;
 	@Column
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dtabertura;
 	@Column
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dtencerramento;
 	@Column
 	@NotNull

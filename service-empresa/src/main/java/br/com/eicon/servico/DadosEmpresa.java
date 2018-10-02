@@ -1,5 +1,6 @@
 package br.com.eicon.servico;
 
+import java.net.URI;
 import java.sql.Date;
 
 import javax.persistence.EntityManager;
@@ -58,9 +59,9 @@ public class DadosEmpresa {
 			em.persist(empr);
 			em.getTransaction().commit();
 			em.close();
-			return Response.status(201).build();
+			return Response.created(new URI("/cadastro/addempresa/" + im)).build();
 		}catch(Exception e){
-			return Response.status(500).build();
+			return Response.serverError().entity("ERRO AO GRAVAR EMPRESA: " + e.getMessage()).build();
 		}
     }
 }
