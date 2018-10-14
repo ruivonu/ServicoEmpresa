@@ -1,7 +1,6 @@
 package br.com.eicon.dao;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

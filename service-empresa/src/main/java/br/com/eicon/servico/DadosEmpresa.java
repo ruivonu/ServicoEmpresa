@@ -32,35 +32,27 @@ public class DadosEmpresa {
 	@Path("addempresa")
     public Response setNewEmpresa(@Valid EmpresaDTO empresaDTO){
 		System.out.println(empresaDTO);
-		
-		try{
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("serviceEmpresa");
+		return DadosEmpresa.inserirEmpresa(empresaDTO);
+		//return Response.accepted().build();
+    }
+	
+	public static Response inserirEmpresa(EmpresaDTO empresaDTO) {
+	    try {
+	    	EntityManagerFactory emf = Persistence.createEntityManagerFactory("serviceEmpresa");
 			EntityManager em  = emf.createEntityManager();
 			
-			Empresa empresa = Empresa.fromDTO(empresaDTO);
-			/*Empresa empr = new Empresa(empresaDTO);
-			empr.setCnpj(empresaDTO.getCnpj());
-			empr.setIm(empresaDTO.getIm());
-			empr.setRazaosocial(empresaDTO.getRazaosocial());
-			empr.setDtabertura(empresaDTO.getDtabertura());
-			empr.setDtencerramento(empresaDTO.getDtencerramento());
-			empr.setEndereco(empresaDTO.getEndereco());
-			empr.setSituacao(empresaDTO.getSituacao());
-			empr.setAtivo(empresaDTO.getAtivo());*/
-			
-			em.getTransaction().begin();
+	    	Empresa empresa = Empresa.fromDTO(empresaDTO);
+	    	
+	    	System.out.println("persistencia");
+	    	
+	        em.getTransaction().begin();
 			em.persist(empresa);
 			em.getTransaction().commit();
 			em.close();
-			return Response.created(new URI("/cadastro/addempresa/" + empresa.getIm())).build();
 			
-		}catch(Exception e){
-			return Response.serverError().entity("ERRO AO GRAVAR EMPRESA: " + e.getMessage()).build();
-		}
-		//} catch (URISyntaxException e) {
-	    //  e.printStackTrace();
-	    //  return Response.serverError().build();
-	    //}*/
-		//return Response.accepted().build();
-    }
+			return Response.created(new URI("/cadastro/addempresa/" + empresa.getIm())).build();
+	    } catch (Exception e) {
+	    	return Response.serverError().entity("ERRO AO GRAVAR EMPRESA: " + e.getMessage()).build();
+	    }
+	}
 }
