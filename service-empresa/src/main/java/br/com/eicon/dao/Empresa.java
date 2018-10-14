@@ -1,89 +1,132 @@
 package br.com.eicon.dao;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import br.com.eicon.dao.dto.EmpresaDTO;
 
 @Entity
+@Table(name = "EMPRESA",schema = "PUBLIC", uniqueConstraints=@UniqueConstraint(columnNames="IM"))
 public class Empresa {
-	@Column
-	@NotNull
+	@Column(name = "cnpj")
+	@NotNull(message = "O CNPJ deve ser informado")
 	private String cnpj;
-	@Column
+	@Column(name = "im")
 	@Id
-	@NotNull
+	@NotNull(message = "A incrição municipal deve ser informada")
 	private String im;
-	@Column
-	@NotNull
+	@Column(name = "razaosocial")
+	@NotNull(message = "A razão social deve ser informada")
 	private String razaosocial;
-	@Column
-	@NotNull
+	@Column(name = "dtabertura")
+	@NotNull(message = "A data de abertura deve ser informada")
 	//@Temporal(TemporalType.DATE)
-	private Date dtabertura;
-	@Column
+	private LocalDate dtabertura;
+	@Column(name = "dtencerramento")
 	//@Temporal(TemporalType.DATE)
-	private Date dtencerramento;
-	@Column
-	@NotNull
+	private LocalDate dtencerramento;
+	@Column(name = "endereco")
+	@NotNull(message = "O endereço deve ser informado")
+	@Size(min = 1, max = 500, message = "O endereço deve ter no máximo 500 caracteres")
 	private String endereco;
-	@Column
-	@NotNull
+	@Column(name = "situacao")
+	@NotNull(message = "A situação deve ser informada")
 	private int situacao;
-	@Column
-	@NotNull
+	@Column(name = "ativo")
+	@NotNull(message = "O status deve ser informado")
 	private int ativo;
 
-	public Empresa(String cnpj2, String im2, String razao, Date dtAbertura2, Date dtEncerramento2, String endereco2,
-			int situacao2, int ativo2) {
+	public static Empresa fromDTO(EmpresaDTO empresaDTO){
+		Empresa empresa = new Empresa();
+		empresa.cnpj 			= empresaDTO.getCnpj();
+		empresa.im 	 			= empresaDTO.getIm();
+		empresa.razaosocial 	= empresaDTO.getRazaosocial();
+		empresa.dtabertura  	= empresaDTO.getDtabertura();
+		empresa.dtencerramento 	= empresaDTO.getDtencerramento();
+		empresa.endereco 		= empresaDTO.getEndereco();
+		empresa.situacao 		= empresaDTO.getSituacao();
+		empresa.ativo 			= empresaDTO.getAtivo();
+		
+		return empresa;
 	}
+	
+	@Override
+	public String toString() {
+		return "Empresa{" + "cnpj=" + cnpj + ", im='" + im + '\'' + ", razaosocial=" + razaosocial
+        + ", dtabertura=" + dtabertura + ", dtencerramento=" + dtencerramento + ", endereco=" + endereco 
+        + ", situacao='" + situacao + '\'' + ", ativo='" + ativo + '}';
+	}
+	
 	public String getCnpj() {
 		return cnpj;
 	}
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
+	
 	public String getIm() {
 		return im;
 	}
-	public void setIm(String im) {
-		this.im = im;
-	}
+	
 	public String getRazaosocial() {
 		return razaosocial;
 	}
-	public void setRazaosocial(String razaosocial) {
-		this.razaosocial = razaosocial;
-	}
-	public Date getDtabertura() {
+	
+	public LocalDate getDtabertura() {
 		return dtabertura;
 	}
-	public void setDtabertura(Date dtabertura) {
-		this.dtabertura = dtabertura;
-	}
-	public Date getDtencerramento() {
+	
+	public LocalDate getDtencerramento() {
 		return dtencerramento;
 	}
-	public void setDtencerramento(Date dtencerramento) {
-		this.dtencerramento = dtencerramento;
-	}
+	
 	public String getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
+	
 	public int getSituacao() {
 		return situacao;
 	}
-	public void setSituacao(int situacao) {
-		this.situacao = situacao;
-	}
+	
 	public int getAtivo() {
 		return ativo;
 	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public void setIm(String im) {
+		this.im = im;
+	}
+
+	public void setRazaosocial(String razaosocial) {
+		this.razaosocial = razaosocial;
+	}
+
+	public void setDtabertura(LocalDate dtabertura) {
+		this.dtabertura = dtabertura;
+	}
+
+	public void setDtencerramento(LocalDate dtencerramento) {
+		this.dtencerramento = dtencerramento;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public void setSituacao(int situacao) {
+		this.situacao = situacao;
+	}
+
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
 	}
+	
 }
